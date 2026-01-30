@@ -1,40 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rock Paper Scissors Game </title>
+    <title>Rock Paper Scissors - Modern Edition</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
- 
 </head>
+
 <body>
-    <h1>Rock - Paper - Scissors </h1>
-    <div class ="choices">
-        <button id="rock" onclick="playGame('rock')"> ROCK </button>
-        <button id="paper"  onclick="playGame('paper')"> PAPER</button>
-        <button id="scissors" onclick="playGame('scissors')"> SCISSORS </button>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="nav-left">
+                <div class="coins-display">
+                    <svg class="coin-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" fill="#FFD700" />
+                        <circle cx="12" cy="12" r="7" stroke="#DAA520" stroke-width="2" />
+                        <text x="12" y="15" text-anchor="middle" fill="#DAA520" font-weight="bold"
+                            font-size="10">$</text>
+                    </svg>
+                    <span id="coinCount">500</span>
+                </div>
+            </div>
+            <div class="nav-center">
+                <ul class="nav-links">
+                    <li><a href="#" id="homeLink" class="active">Home</a></li>
+                    <li><a href="#" id="historyLink">History</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <button id="navPlayBtn" class="nav-play-btn">Play Game</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Landing Page -->
+        <section id="landingPage" class="section active">
+            <div class="hero-content">
+                <h1 class="main-title">Rock <span class="accent">Paper</span> Scissors</h1>
+                <p class="hero-subtitle">Test your luck and skill in this modern take on a classic game!</p>
+                <div class="floating-icons">
+                    <div class="float-icon rock-float">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2L4 7v10l8 5 8-5V7l-8-5zm0 18l-6-3.75V8.75L12 5l6 3.75v7.5L12 20z" />
+                        </svg>
+                    </div>
+                    <div class="float-icon paper-float">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+                        </svg>
+                    </div>
+                    <div class="float-icon scissors-float">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M19 3c-1.1 0-2 .9-2 2 0 .28.06.54.16.78L14.41 11l-2.41-3.37c.62-.43 1-1.14 1-1.93 0-1.38-1.12-2.5-2.5-2.5-1.38 0-2.5 1.12-2.5 2.5 0 .79.41 1.5 1.03 1.93l2.42 3.38-2.42 3.38c-.62-.43-1.03-1.14-1.03-1.93 0-1.38 1.12-2.5 2.5-2.5 1.38 0 2.5 1.12 2.5 2.5 0 .79-.38 1.5-1 1.93L14.41 13l2.75 5.22c-.1-.24-.16-.5-.16-.78 0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2c-.37 0-.7-.11-1-.28l-3.1 1.63L12 14l-4.9 6.35-3.1-1.63c-.3.17-.63.28-1 .28-1.1 0-2-.9-2-2s.9-2 2-2c.28 0 .54.06.78.16L6.59 13l-2.75-5.22c.1.24.16.5.16.78 0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2c.37 0 .7.11 1 .28l3.1-1.63L12 10l4.9-6.35 3.1 1.63c.3-.17.63-.28 1-.28 1.1 0 2-.9 2-2s-.9-2-2-2z" />
+                        </svg>
+                    </div>
+                </div>
+                <button id="startGameBtn" class="primary-btn pulse">Start Game</button>
+            </div>
+        </section>
+
+        <!-- Game Page -->
+        <section id="gamePage" class="section">
+            <!-- Top Section(Power) -->
+            <div class="top-row">
+                <div class="player-card player-human">
+                    <div class="player-info">
+                        <h3>Player</h3>
+                        <div class="power-bar">
+                            <div id="playerPower" class="power-fill" style="width: 100%;"></div>
+                        </div>
+                        <span class="attempts-text"><span id="playerAttempts">6</span>/6 Attempts</span>
+                    </div>
+                    <div class="score-circle">
+                        <span id="playerScore" class="score-num">0</span>
+                    </div>
+                </div>
+
+                <div class="vs-badge">VS</div>
+
+                <div class="player-card player-ai">
+                    <div class="score-circle">
+                        <span id="computerScore" class="score-num">0</span>
+                    </div>
+                    <div class="player-info">
+                        <h3>Computer</h3>
+                        <div class="power-bar">
+                            <div id="aiPower" class="power-fill" style="width: 100%;"></div>
+                        </div>
+                        <span class="attempts-text"><span id="aiAttempts">6</span>/6 Attempts</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Middle Section -->
+            <div class="game-area">
+                <div class="choices-container">
+                    <div class="choice-card clickable" data-choice="rock">
+                        <div class="icon-box">
+                            <svg viewBox="0 0 24 24" width="64" height="64">
+                                <path fill="#64748b"
+                                    d="M12 2L4 7v10l8 5 8-5V7l-8-5zm0 18l-6-3.75V8.75L12 5l6 3.75v7.5L12 20z" />
+                            </svg>
+                        </div>
+                        <span>Rock</span>
+                    </div>
+                    <div class="choice-card clickable" data-choice="paper">
+                        <div class="icon-box">
+                            <svg viewBox="0 0 24 24" width="64" height="64">
+                                <path fill="#64748b"
+                                    d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+                            </svg>
+                        </div>
+                        <span>Paper</span>
+                    </div>
+                    <div class="choice-card clickable" data-choice="scissors">
+                        <div class="icon-box">
+                            <svg viewBox="0 0 24 24" width="64" height="64">
+                                <path fill="#64748b"
+                                    d="M19 3c-1.1 0-2 .9-2 2 0 .28.06.54.16.78L14.41 11l-2.41-3.37c.62-.43 1-1.14 1-1.93 0-1.38-1.12-2.5-2.5-2.5-1.38 0-2.5 1.12-2.5 2.5 0 .79.41 1.5 1.03 1.93l2.42 3.38-2.42 3.38c-.62-.43-1.03-1.14-1.03-1.93 0-1.38 1.12-2.5 2.5-2.5 1.38 0 2.5 1.12 2.5 2.5 0 .79-.38 1.5-1 1.93L14.41 13l2.75 5.22c-.1-.24-.16-.5-.16-.78 0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2c-.37 0-.7-.11-1-.28l-3.1 1.63L12 14l-4.9 6.35-3.1-1.63c-.3.17-.63.28-1 .28-1.1 0-2-.9-2-2s.9-2 2-2c.28 0 .54.06.78.16L6.59 13l-2.75-5.22c.1.24.16.5.16.78 0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2c.37 0 .7.11 1 .28l3.1-1.63L12 10l4.9-6.35 3.1 1.63c.3-.17.63-.28 1-.28 1.1 0 2-.9 2-2s-.9-2-2-2z" />
+                            </svg>
+                        </div>
+                        <span>Scissors</span>
+                    </div>
+                </div>
+
+                <!-- Thinking & Selection -->
+                <div id="battleGround" class="battle-ground hidden">
+                    <div class="battle-side player-side">
+                        <div id="playerPick" class="pick-card"></div>
+                    </div>
+                    <div class="battle-center">
+                        <div id="battleResult" class="battle-result-text"></div>
+                    </div>
+                    <div class="battle-side computer-side">
+                        <div id="computerPick" class="pick-card">
+                            <div class="thinking-loader">...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom -->
+            <div class="game-footer">
+                <button id="resetGameBtn" class="secondary-btn">Reset Score</button>
+                <div id="globalResultMessage" class="global-result"></div>
+            </div>
+        </section>
+
+        <!-- History -->
+        <div id="historyModal" class="modal-overlay hidden">
+            <div class="modal-content">
+                <button id="closeHistoryBtn" class="close-btn">&times;</button>
+                <h2>Win/Lose History</h2>
+                <div id="historyList" class="history-list">
+                    <p class="empty-msg">No games recorded yet.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Game-Over -->
+    <div id="gameOverModal" class="modal-overlay hidden">
+        <div class="game-over-card">
+            <button id="closeGameOverBtn" class="close-btn">&times;</button>
+            <h2 id="modalTitle">Game Over</h2>
+            <p id="modalMessage"></p>
+            <div class="modal-stats">
+                <div class="stat-item">
+                    <span class="stat-label">Player Score</span>
+                    <span id="finalPlayerScore" class="stat-value">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Computer Score</span>
+                    <span id="finalAiScore" class="stat-value">0</span>
+                </div>
+            </div>
+            <button id="playAgainBtn" class="primary-btn">Play Again</button>
+        </div>
     </div>
-   
-       <div class="dev">
-        <h2 id="userChoice"> PLAYER: </h2>
-       </div> 
-       <div class="dev">
-        <h2 id="computerChoice"> COMPUTER: </h2>
-       </div>
-       <div class="dev">
-        <h2  id="result">  </h2>
-       </div>
-        
-       <div class="score">Player Score: 
-        <span id="playerScore">0</span>
-       </div>
-       <div class="score">Computer Score: 
-        <span id="computerScore">0</span>
-       </div>
-   <div class="score">
-    <button id="resetScore" onclick="Reset()">RESET SCORE</button>
-   </div>
-    
+
     <script src="script.js"></script>
 </body>
+
 </html>
